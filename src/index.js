@@ -1,5 +1,6 @@
-const express = require('express');
-const morgan = require('morgan')
+require('dotenv').config() //lib que faz a leitura das variáveis de ambiente
+const express = require('express'); //lib que lida com registros do banco de dados
+const morgan = require('morgan') //lib que imprime logs de cada requisição http
 
 const app = express();// Cria uma instância do aplicativo Express
 
