@@ -22,10 +22,11 @@ const storageTypes = {
             crypto.randomBytes(16, (err, hash) => { //Cria 16 bytes aleatórios
                 if (err) return cb(err); // Se der erro, retorna o erro
 
+                const fileName = file.originalname.normalize('NFD').toLowerCase().replace(/\s+/g, '');
                 const ext = path.extname(file.originalname); //Pega a extensão do arquivo selecionado
 
                 //Define o nome do arquivo quando salvo
-                file.key = `${hash.toString('hex')}-${file.originalname}.${ext}`; //nome vai ser hash hexadecimal(numero e letras) + nome original + tipo do arquivo
+                file.key = `${hash.toString('hex')}-${fileName}.${ext}`; //nome vai ser hash hexadecimal(numero e letras) + nome original + tipo do arquivo
 
                 cb(null, file.key); // Retorna o nome do arquivo
             });
@@ -39,12 +40,13 @@ const storageTypes = {
             crypto.randomBytes(16, (err, hash) => { //Cria 16 bytes aleatórios
                 if (err) return cb(err); // Se der erro, retorna o erro
 
+                const fileName = file.originalname.normalize('NFD').toLowerCase().replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '');
                 const ext = path.extname(file.originalname); //Pega a extensão do arquivo selecionado
 
                 //Define o nome do arquivo quando salvo
-                const fileName = `${hash.toString('hex')}-${file.originalname}`; //nome vai ser hash hexadecimal(numero e letras) + nome original + tipo do arquivo
+                const fileNameInS3 = `${hash.toString('hex')}-${fileName}`; //nome vai ser hash hexadecimal(numero e letras) + nome original + tipo do arquivo
 
-                cb(null, fileName); // Retorna o nome do arquivo
+                cb(null, fileNameInS3); // Retorna o nome do arquivo
             });
         }
     })
